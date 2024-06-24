@@ -29,7 +29,6 @@ class DonationRecordScreen extends StatefulWidget {
 class _DonationRecordScreenState extends State<DonationRecordScreen> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController bloodIdController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
   TextEditingController donorIclController = TextEditingController();
   TextEditingController placeController = TextEditingController();
   TextEditingController haemoglobinController = TextEditingController();
@@ -81,7 +80,6 @@ class _DonationRecordScreenState extends State<DonationRecordScreen> {
     try {
       // Get inputted data from the controller
       String bloodId = bloodIdController.text;
-      String email = emailController.text;
       String icNumber = donorIclController.text;
       String place = placeController.text;
       String haemo = haemoglobinController.text;
@@ -92,7 +90,6 @@ class _DonationRecordScreenState extends State<DonationRecordScreen> {
       // Add a new document with the data
       await donationRecordRef.add({
         'bloodId': bloodId,
-        'email': email,
         'icNumber': icNumber,
         'bloodType': bloodType,
         'status': status,
@@ -190,8 +187,6 @@ class _DonationRecordScreenState extends State<DonationRecordScreen> {
                           children: [
                             SizedBox(height: 6.v),
                             _buildDonorIcSection(),
-                            SizedBox(height: 6.v),
-                            _buildEmailSection(),
                             SizedBox(height: 20.v),
                             _buildBloodIdSection(),
                             SizedBox(height: 20.v),
@@ -251,35 +246,6 @@ class _DonationRecordScreenState extends State<DonationRecordScreen> {
   }
 
   /// Section Widget
-  Widget _buildEmailSection() {
-    return Container(
-      margin: EdgeInsets.only(right: 5.h),
-      padding: EdgeInsets.symmetric(horizontal: 1.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "EMAIL",
-            style: CustomTextStyles.bodyMediumGray700_1,
-          ),
-          SizedBox(height: 4.v),
-          CustomTextFormField(
-            controller: emailController,
-            textInputType: TextInputType.emailAddress,
-            validator: (value) {
-              RegExp regExp = RegExp(emailPattern);
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              } else if (!regExp.hasMatch(value)) {
-                return 'Please enter a email';
-              }
-              return null;
-            },
-          )
-        ],
-      ),
-    );
-  }
   Widget _buildDonorIcSection() {
     return Container(
       margin: EdgeInsets.only(right: 5.h),
@@ -426,7 +392,6 @@ class _DonationRecordScreenState extends State<DonationRecordScreen> {
     );
   }
 
-  /// Section Widget
   /// _buildPlaceSection
   Widget _buildPlaceSection() {
     return Padding(

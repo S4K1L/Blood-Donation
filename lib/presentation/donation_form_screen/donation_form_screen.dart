@@ -97,6 +97,39 @@ class _DonationFormScreenState extends State<DonationFormScreen> {
         'height': height,
         'weight': weight,
       });
+      User? user = _auth.currentUser;
+      if (user != null) {
+        // Create a reference to the Firestore document for the logged-in user
+        DocumentReference userRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
+
+        // Update the user document with the data
+        await userRef.update({
+          'name': name,
+          'email': email,
+          'icNumber': icNumber,
+          'dob': selectedDate,
+          'age': age,
+          'race': race,
+          'maritalStatus': maritalStatus,
+          'currentJob': currentJob,
+          'hpNumber': hpNumber,
+          'address': address,
+          'height': height,
+          'weight': weight,
+        });
+
+        // Display a success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Blood Donation Form Submitted',
+              style: TextStyle(color: Colors.red),
+            ),
+            backgroundColor: Colors.white,
+          ),
+        );
+        print('User data updated successfully');
+      }
 
       // Display a success message
       ScaffoldMessenger.of(context).showSnackBar(

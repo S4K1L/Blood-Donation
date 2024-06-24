@@ -11,6 +11,23 @@ class UserDonationHistory extends StatefulWidget {
 }
 
 class _UserDonationHistoryState extends State<UserDonationHistory> {
+  String? userIcNumber;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserIcNumber();
+  }
+
+  void _fetchUserIcNumber() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      setState(() {
+        userIcNumber = userDoc['icNumber'];
+      });
+    }
+  }
 
   Widget _buildDrawer(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
@@ -22,7 +39,7 @@ class _UserDonationHistoryState extends State<UserDonationHistory> {
       stream: FirebaseFirestore.instance.collection('users').doc(user.uid).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         }
 
         if (snapshot.hasError) {
@@ -52,7 +69,6 @@ class _UserDonationHistoryState extends State<UserDonationHistory> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,10 +85,12 @@ class _UserDonationHistoryState extends State<UserDonationHistory> {
         ),
       ),
       drawer: _buildDrawer(context),
-      body: StreamBuilder<QuerySnapshot>(
+      body: userIcNumber == null
+          ? Center(child: CircularProgressIndicator())
+          : StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('Donation Record')
-            .where('email', isEqualTo: FirebaseAuth.instance.currentUser?.email)
+            .where('icNumber', isEqualTo: userIcNumber)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -106,14 +124,18 @@ class _UserDonationHistoryState extends State<UserDonationHistory> {
                 child: ListTile(
                   title: Row(
                     children: [
-                      Text('Blood ID: ',style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold
-                      ),),
-                      Text(record['bloodId'],style: TextStyle(
-                        color: Colors.red
-                      ),),
+                      Text(
+                        'Blood ID: ',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        record['bloodId'],
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ],
                   ),
                   subtitle: Column(
@@ -121,38 +143,50 @@ class _UserDonationHistoryState extends State<UserDonationHistory> {
                     children: [
                       Row(
                         children: [
-                          Text('Blood Type: ',style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.black,
-                          fontWeight: FontWeight.bold
-                                            )),
-                          Text(record['bloodType'],style: TextStyle(
-                              color: Colors.red
-                          )),
+                          Text(
+                            'Blood Type: ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            record['bloodType'],
+                            style: TextStyle(color: Colors.red),
+                          ),
                         ],
                       ),
                       Row(
                         children: [
-                          Text('Status: ',style: TextStyle(
+                          Text(
+                            'Status: ',
+                            style: TextStyle(
                               fontSize: 16,
                               color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )),
-                          Text(record['status'],style: TextStyle(
-                              color: Colors.red
-                          )),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            record['status'],
+                            style: TextStyle(color: Colors.red),
+                          ),
                         ],
                       ),
                       Row(
                         children: [
-                          Text('Place: ',style: TextStyle(
+                          Text(
+                            'Place: ',
+                            style: TextStyle(
                               fontSize: 16,
                               color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )),
-                          Text(record['place'],style: TextStyle(
-                              color: Colors.red
-                          )),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            record['place'],
+                            style: TextStyle(color: Colors.red),
+                          ),
                         ],
                       ),
                     ],

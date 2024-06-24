@@ -75,13 +75,6 @@ class _StaffDrawerState extends State<StaffDrawer> {
                     },
                   ),
                   ListTile(
-                    title: Text('INSERT DONATION RECORD', style: TextStyle(color: Colors.black, fontFamily: "Gotham", fontSize: 16.0 ),),
-                    leading: Icon(Icons.remove_from_queue, color: Colors.red,),
-                    onTap: () {
-                      onTapScreenTitle(AppRoutes.donationRecordScreen);
-                    },
-                  ),
-                  ListTile(
                     title: Text('ADD BLOOD STORAGE', style: TextStyle(color: Colors.black, fontFamily: "Gotham", fontSize: 16.0 ),),
                     leading: Icon(Icons.add_circle_outline, color: Colors.red,),
                     onTap: () {
