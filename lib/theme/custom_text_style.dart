@@ -3,11 +3,6 @@ import 'package:blood_donation/theme/theme_helper.dart';
 import 'package:flutter/material.dart';
 
 extension on TextStyle {
-  TextStyle get sansation {
-    return copyWith(
-      fontFamily: 'Sansation',
-    );
-  }
 }
 
 /// A collection of pre-defined text styles for customizing text appearance,

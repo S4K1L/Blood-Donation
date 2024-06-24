@@ -13,7 +13,6 @@ class EditDonationDetailsPage extends StatefulWidget {
 class _EditDonationDetailsPageState extends State<EditDonationDetailsPage> {
   TextEditingController _icNumberController = TextEditingController();
   TextEditingController _bloodIdController = TextEditingController();
-  TextEditingController _statusController = TextEditingController();
   TextEditingController _placeController = TextEditingController();
   TextEditingController _haemoglobinController = TextEditingController();
   TextEditingController _dateController = TextEditingController();

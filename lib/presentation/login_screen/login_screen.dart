@@ -39,11 +39,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
-     AuthCredential credential = GoogleAuthProvider.credential(
+     GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken
     );
-    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
     route();
   }
 
@@ -98,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void route() async {
     User? user = FirebaseAuth.instance.currentUser;
-    var kk = FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .collection('users')
         .doc(user!.uid)
         .get()
@@ -414,11 +413,12 @@ class _LoginScreenState extends State<LoginScreen> {
             controller: emailController,
             validator: (value) {
               RegExp regExp = RegExp(emailPattern);
-              if (value == null || value!.isEmpty) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter some text';
               } else if (!regExp.hasMatch(value)) {
                 return 'Please enter a valid email address';
               }
+              return null;
             },
           )
         ],
@@ -452,6 +452,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (value!.length < 5) {
                   return 'Must be more then 5 character';
                 }
+                return null;
               },
             ),
           )

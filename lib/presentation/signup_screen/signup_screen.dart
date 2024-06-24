@@ -1,8 +1,6 @@
 import 'package:blood_donation/core/app_export.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../core/FirebaseAuth/firebaseAuthentication.dart';
 import '../../core/utils/image_constant.dart';
@@ -300,11 +298,12 @@ class _SignupScreenState extends State<SignupScreen> {
             textInputType: TextInputType.emailAddress,
             validator: (value) {
               RegExp regExp = RegExp(emailPattern);
-              if (value == null || value!.isEmpty) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter some text';
               } else if (!regExp.hasMatch(value)) {
                 return 'Please enter a valid address';
               }
+              return null;
             },
           )
         ],
@@ -334,6 +333,7 @@ class _SignupScreenState extends State<SignupScreen> {
               if (value!=passwordController.text) {
                 return 'password does not same';
               }
+              return null;
             },
           ),
         ],
@@ -362,6 +362,7 @@ class _SignupScreenState extends State<SignupScreen> {
               if (value!.length < 5) {
                 return 'Must be more then 5 character';
               }
+              return null;
             },
           ),
         ],

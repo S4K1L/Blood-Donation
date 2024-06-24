@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:blood_donation/core/app_export.dart';
 import 'package:blood_donation/core/utils/size_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -308,7 +310,7 @@ class _EditBloodStoragePageState extends State<EditBloodStoragePage> {
                       controller: TextEditingController(
                         text: _date != null
                             ? DateFormat('yyyy-MM-dd').format(
-                                _date!) // Display selected date if available
+                                _date) // Display selected date if available
                             : '', // Display empty text if no date is selected
                       ),
                       decoration: InputDecoration(
@@ -329,7 +331,7 @@ class _EditBloodStoragePageState extends State<EditBloodStoragePage> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: _date ?? DateTime.now(),
+      initialDate: _date,
       // Use selected date if available, else use current date
       firstDate: DateTime(1900),
       // Adjust as needed
@@ -342,48 +344,6 @@ class _EditBloodStoragePageState extends State<EditBloodStoragePage> {
     }
   }
 
-  Widget _buildDrawer(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      return SizedBox.shrink();
-    }
-
-    return StreamBuilder<DocumentSnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        }
-
-        if (snapshot.hasError) {
-          print('Error retrieving user data: ${snapshot.error}');
-          return SizedBox.shrink();
-        }
-
-        if (!snapshot.hasData || !snapshot.data!.exists) {
-          print('User document does not exist');
-          return SizedBox.shrink();
-        }
-
-        final userRole = snapshot.data!.get('type');
-
-        switch (userRole) {
-          case 'admin':
-            return AdminDrawer();
-          case 'donor':
-            return DonorDrawer();
-          case 'staff':
-            return StaffDrawer();
-          default:
-            print('Unknown user role: $userRole');
-            return SizedBox.shrink();
-        }
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

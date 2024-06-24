@@ -268,11 +268,12 @@ class _DonationRecordScreenState extends State<DonationRecordScreen> {
             textInputType: TextInputType.emailAddress,
             validator: (value) {
               RegExp regExp = RegExp(emailPattern);
-              if (value == null || value!.isEmpty) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter some text';
               } else if (!regExp.hasMatch(value)) {
                 return 'Please enter a email';
               }
+              return null;
             },
           )
         ],
@@ -296,11 +297,12 @@ class _DonationRecordScreenState extends State<DonationRecordScreen> {
             textInputType: TextInputType.emailAddress,
             validator: (value) {
               RegExp regExp = RegExp(emailPattern);
-              if (value == null || value!.isEmpty) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter some text';
               } else if (!regExp.hasMatch(value)) {
                 return 'Please enter a ic number';
               }
+              return null;
             },
           )
         ],

@@ -244,11 +244,12 @@ class _AddUserScreenState extends State<AddUserScreen> {
             textInputType: TextInputType.emailAddress,
             validator: (value) {
               RegExp regExp = RegExp(emailPattern);
-              if (value == null || value!.isEmpty) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter some text';
               } else if (!regExp.hasMatch(value)) {
                 return 'Please enter a valid address';
               }
+              return null;
             },
           )
         ],
@@ -279,6 +280,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
               if (value!.length < 5) {
                 return 'Must be more then 5 character';
               }
+              return null;
             },
           ),
         ],

@@ -1,7 +1,6 @@
 import 'package:blood_donation/core/app_export.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../core/FirebaseAuth/firebaseAuthentication.dart';
 import '../../core/utils/image_constant.dart';
 import '../../core/utils/size_utils.dart';
@@ -255,11 +254,12 @@ class _AddStaffState extends State<AddStaff> {
             textInputType: TextInputType.emailAddress,
             validator: (value) {
               RegExp regExp = RegExp(emailPattern);
-              if (value == null || value!.isEmpty) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter some text';
               } else if (!regExp.hasMatch(value)) {
                 return 'Please enter id';
               }
+              return null;
             },
           )
         ],
@@ -284,11 +284,12 @@ class _AddStaffState extends State<AddStaff> {
             textInputType: TextInputType.emailAddress,
             validator: (value) {
               RegExp regExp = RegExp(emailPattern);
-              if (value == null || value!.isEmpty) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter some text';
               } else if (!regExp.hasMatch(value)) {
                 return 'Please enter a valid address';
               }
+              return null;
             },
           )
         ],
@@ -318,6 +319,7 @@ class _AddStaffState extends State<AddStaff> {
               if (value!.length < 5) {
                 return 'Must be more then 5 character';
               }
+              return null;
             },
             ),
         ],

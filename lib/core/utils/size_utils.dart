@@ -1,6 +1,7 @@
-import 'dart:ui' as ui;
+// ignore_for_file: duplicate_ignore
+
 import 'package:flutter/material.dart';
-import '../app_export.dart'; // These are the Viewport values of your Figma Design.
+// These are the Viewport values of your Figma Design.
 
 // These are used in the code as a reference to create your UI Responsively.
 const num FIGMA_DESIGN_WIDTH = 430;
@@ -53,9 +54,7 @@ class Sizer extends StatelessWidget {
     });
   }
 }
-// ignore_for_file: must_be_immutable
 
-// ignore_for_file: must_be_immutable
 class SizeUtils {
   /// Device's BoxConstraints
   static late BoxConstraints boxConstraints;

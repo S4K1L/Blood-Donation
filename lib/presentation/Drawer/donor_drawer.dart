@@ -1,7 +1,6 @@
 import 'package:blood_donation/core/app_export.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../routes/app_routes.dart';
